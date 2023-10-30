@@ -1,0 +1,225 @@
+ CREATE TABLE Student_Login(
+     Reg_no CHAR(6) PRIMARY KEY NOT NULL,
+     Last_login DATETIME NOT NULL);
+
+ CREATE TABLE Student(
+     Reg_no CHAR(6) NOT NULL PRIMARY KEY,
+     First_name VARCHAR(25) NOT NULL,
+     Last_name VARCHAR(25) NOT NULL,
+     Email VARCHAR(30) NOT NULL,
+     Home_address VARCHAR(30) NOT NULL,
+     Street_address VARCHAR(50) NOT NULL,
+     Country VARCHAR(25) NOT NULL,
+	Entrance_year YEAR);
+
+ CREATE TABLE Department(
+     Name VARCHAR(10) NOT NULL PRIMARY KEY,
+     Location VARCHAR(40) NOT NULL);
+
+ CREATE TABLE Student_Course(
+     STUDENT_Reg_no CHAR(6) NOT NULL,
+     COURSE_code CHAR(10) NOT NULL);
+
+ CREATE TABLE Student_Department(
+     STUDENT_Reg_no CHAR(6) NOT NULL,
+     DEPARTMENT_name VARCHAR(10) NOT NULL);
+
+ INSERT INTO Department VALUES
+     ('ET','Faculty of Technology'),
+     ('BST', 'Faculty of Technology'),
+     ('ICT', 'Faculty of Technology'),
+	('MDS', 'Faculty of Technology');
+
+ INSERT INTO Student(Reg_no, First_name, Last_name, Email, Home_address, Street_address, Country) VALUES
+     ('TG0200', 'Kasun', 'Kavihara', 'kaskavi45@gmail.com', 'No23', 'Anuradhapura - Samagi Mawatha', 'Sri Lanka'),
+     ('TG0203', 'Samadhi', 'Tharuka', 'SamaTharu78@gmail.com', 'No512/34', 'Colombo - Issac Newton Road', 'Sri Lanka'),
+     ('TG0207', 'Hirukshan', 'Krishnan', 'Krish99@gmail.com', 'No98', 'Jaffna - Mahendran Road', 'Sri Lanka'),
+     ('TG0240', 'Shehan', 'Ranidu', 'SheRanid23@gmail.com', 'No1', 'Ratnapura - Mahagamasekara Road', 'Sri Lanka'),
+     ('TG0251', 'Keshika', 'Ruwanthi', 'Ruwi1999@gmail.com', 'No8/67', 'Mathale - Pansala Road', 'Sri Lanka'),
+     ('TG0267', 'Chrish', 'Edward', 'CrishED2001@gmail.com', 'No245/B', 'London - Charles Lane', 'Britain'),
+     ('TG0280', 'Mohomad', 'Arkesh', 'Arch98@gmail.com', 'No65', 'Pannipitiya - Mosque Road', 'Sri Lanka'),
+     ('TG0291', 'Piyumi', 'Kaveesha', 'kaviiPiyuu2000@gmail.com', 'No79', 'Mathara - Temple Road', 'Sri Lanka'),
+     ('TG0300', 'Buddhika', 'Prasad', 'BuddhiSD88@gmail.com', 'No145', 'Piliyandala - Senanayaka Mawatha', 'Sri Lanka'),
+     ('TG0305', 'Pathum', 'Kaveesha', 'PathuKavi99@gmail.com', 'No50', 'Galle - Hospital Road', 'Sri Lanka'),
+     ('TG0320', 'Kasuni', 'Poornima', 'Kasuniporr11@gmail.com', 'No56/C', 'Kandy - Maligawa Para', 'Sri Lanka'),
+     ('TG0340', 'Tamilchandran', 'Balakrishnam', 'Baall56@gmail.com', 'No34', 'Kilinochchi - Main Street', 'Sri Lanka'),
+     ('TG0355', 'Leyla', 'Madison', 'LeyMad89@gmail.com', 'No576/C', 'Los Angles - Kent Road', 'USA'),
+     ('TG0400', 'Shayne', 'Alhamdri', 'ShayAli90@gmail.com', 'No55', 'Maradana - Alwis road', 'Sri Lanka'),
+     ('TG0420', 'Naveen', 'Rajapakse', 'navraja98@gmail.com', 'No67', 'Kandy - Hill Street', 'Sri Lanka'),
+     ('TG0450', 'Lakshmi', 'Kumari', 'kumari99@gmail.com', 'No12', 'Kandy - Temple Street', 'Sri Lanka'),
+     ('TG0478', 'Rajiv', 'Patel', 'rajiv91@email.com', 'No9', 'Jaffna - New Town road', 'Sri Lanka'),
+     ('TG0502', 'Ahmed', 'Abdullah', 'aabdul12@email.com', 'No34', 'Hikkaduwa - Beach road', 'Sri Lanka'),
+     ('TG0503', 'Chamara', 'Fonseka', 'chamara.fonseka@gmail.com', 'No567', 'Matara - Beach Road', 'Sri Lanka'),
+     ('TG0601', 'Dilhara', 'Wijesinghe', 'dilhwijesinghe@gmail.com', 'No890', 'Trincomalee - Main Street', 'Sri Lanka'),
+     ('TG0650', 'Saman', 'Perera', 'samanperera@gmail.com', 'No12', 'Anuradhapura - Main Road', 'Sri Lanka'),
+     ('TG0678', 'Thilani', 'Weerasinghe', 'thilweerasinghe@gmail.com', 'No45', 'Jaffna - KKS Road', 'Sri Lanka'),
+     ('TG0701', 'Nimanthi', 'Fernando', 'nimanthi.f@gmail.com', 'No876', 'Negombo - Main Street', 'Sri Lanka'),
+     ('TG0756', 'Lasitha', 'Gunasekara', 'lasitha.gunasekara@gmail.com', 'No89', 'Kandy - Dalada Veediya', 'Sri Lanka'),
+     ('TG0789', 'Ishan', 'Silva', 'ishan.silva@gmail.com', 'No67', 'Galle - Magalle Fort', 'Sri Lanka'),
+     ('TG0800', 'Sithara', 'Rathnayake', 'sithara.rathnayake@gmail.com', 'No345', 'Trincomalee - Beach Road', 'Sri Lanka'),
+     ('TG0811', 'Kamal', 'Perera', 'kamal.perera@gmail.com', 'No765', 'Anuradhapura - Sacred City', 'Sri Lanka'),
+     ('TG0900', 'Dinithi', 'Weerasinghe', 'dinithi.weerasinghe@gmail.com', 'No101', 'Jaffna - Nallur Road', 'Sri Lanka'),
+     ('TG0998', 'Prabath', 'Fernando', 'prabath.f@gmail.com', 'No111', 'Negombo - Poruthota Road', 'Sri Lanka'),
+     ('TG1010', 'Nuwan', 'Gunasekara', 'nuwan.gunasekara@gmail.com', 'No77', 'Kandy - Saranankara Road', 'Sri Lanka'),
+     ('TG1027', 'Krishna', 'Suren', 'balamKrsh@gmail.com', 'No98', 'Kandy - Ganedran Road', 'Sri Lanka'),
+     ('TG1036', 'Upeksha', 'Ishini', 'Upekshaish@gmail.com', 'No12', 'Ratnapura - Main Road', 'Sri Lanka'),
+     ('TG1067', 'Dumindu', 'Gawesha', 'Dumi99@gmail.com', 'No4', 'Biyagama - Wolcott Road', 'Sri Lanka'),
+     ('TG1100', 'Hashan', 'Kavindu', 'HashKavi@gmail.com', 'No75', 'Polonnaruwa - Mahesh Road', 'Sri Lanka'),
+     ('TG1145', 'Mohomad', 'Abeen', 'Abii88@gmail.com', 'No12', 'Kandy - Temple Road', 'Sri Lanka'),
+     ('TG1198', 'Buddhika', 'Gayan', 'BuddhiGaya34@gmail.com', 'No56', 'Kegalle - Main Road', 'Sri Lanka');
+     
+	 
+INSERT INTO Student_Login VALUES
+('TG0200', '2023-10-25 15:30:00'),
+('TG0203', '2023-10-25 22:20:00'),
+('TG0207', '2023-10-26 08:45:00'),
+('TG0240', '2023-10-26 14:15:00'),
+('TG0251', '2023-10-27 09:30:00'),
+('TG0267', '2023-10-28 12:10:00'),
+('TG0280', '2023-10-29 17:25:00'),
+('TG0291', '2023-10-30 11:55:00'),
+('TG0300', '2023-10-31 16:40:00'),
+('TG0305', '2023-11-01 18:20:00'),
+('TG0320', '2023-11-02 10:15:00'),
+('TG0340', '2023-11-03 23:05:00'),
+('TG0355', '2023-11-04 07:30:00'),
+('TG0400', '2023-11-05 19:45:00'),
+('TG0420', '2023-11-06 14:55:00'),
+('TG0450', '2023-11-07 16:20:00'),
+('TG0478', '2023-11-08 21:35:00'),
+('TG0502', '2023-11-09 10:40:00'),
+('TG0503', '2023-11-10 13:50:00'),
+('TG0601', '2023-11-11 08:15:00'),
+('TG0650', '2023-11-12 17:05:00'),
+('TG0678', '2023-11-13 09:25:00'),
+('TG0701', '2023-11-14 22:40:00'),
+('TG0756', '2023-11-15 12:30:00'),
+('TG0789', '2023-11-16 19:50:00'),
+('TG0800', '2023-11-17 15:10:00'),
+('TG0811', '2023-11-18 18:45:00'),
+('TG0900', '2023-11-19 20:20:00'),
+('TG0998', '2023-11-20 11:05:00'),
+('TG1010', '2023-11-21 15:30:00'),
+('TG1017', '2023-11-21 14:30:00'),
+('TG1036', '2023-11-21 16:30:00'),
+('TG1067', '2023-11-21 18:30:00'),
+('TG1100', '2023-11-21 17:30:00'),
+('TG1145', '2023-11-21 14:30:00'),
+('TG1198', '2023-11-21 13:30:00');
+	
+INSERT INTO Student_Department VALUES
+('TG0200', 'ICT'),
+('TG0203', 'ICT'),
+('TG0207', 'ICT'),
+('TG0240', 'ICT'),
+('TG0251', 'ICT'),
+('TG0267', 'BST'),
+('TG0280', 'ET'),
+('TG0291', 'ICT'),
+('TG0300', 'BST'),
+('TG0305', 'BST'),
+('TG0320', 'ICT'),
+('TG0340', 'ET'),
+('TG0355', 'ET'),
+('TG0400', 'ICT'),
+('TG0420', 'BST'),
+('TG0450', 'ICT'),
+('TG0478', 'ICT'),
+('TG0502', 'BST'),
+('TG0503', 'ET'),
+('TG0601', 'ICT'),
+('TG0650', 'ICT'),
+('TG0678', 'ET'),
+('TG0701', 'ICT'),
+('TG0756', 'BST'),
+('TG0789', 'ET'),
+('TG0800', 'BST'),
+('TG0811', 'BST'),
+('TG0900', 'ET'),
+('TG0998', 'ET'),
+('TG1010', 'BST'),
+('TG1017', 'BST'),
+('TG1036', 'ET'),
+('TG1067', 'BST'),
+('TG1100', 'ICT'),
+('TG1145', 'ICT'),
+('TG1198', 'BST');
+
+UPDATE Student
+SET Entrance_year = '2018'
+WHERE Reg_No BETWEEN 'TG0200'  AND 'TG0399'
+ORDER BY Reg_No ASC;
+
+UPDATE Student
+SET Entrance_year = '2019'
+WHERE Reg_No BETWEEN 'TG0400'  AND 'TG0599'
+ORDER BY Reg_No ASC;
+
+UPDATE Student
+SET Entrance_year = '2020'
+WHERE Reg_No BETWEEN 'TG0600'  AND 'TG0999'
+ORDER BY Reg_No ASC;
+
+UPDATE Student
+SET Entrance_year = '2021'
+WHERE Reg_No BETWEEN 'TG1000'  AND 'TG1200'
+ORDER BY Reg_No ASC;
+
+INSERT INTO Student_Course VALUES
+('TG0200', 'ICT4243'),
+('TG0200', 'ICT4123'),
+('TG0203', 'ICT4123'),
+('TG0207', 'ICT4123'),
+('TG0240', 'ICT4243'),
+('TG0251', 'ICT4243'),
+('TG0267', 'BST4113'),
+('TG0280', 'ET4114'),
+('TG0291', 'ICT4123'),
+('TG0300', 'BST4113'),
+('TG0305', 'BST4113'),
+('TG0320', 'ICT4243'),
+('TG0340', 'ET4242'),
+('TG0355', 'ET4114'),
+('TG0400', 'ICT3112'),
+('TG0420', 'BST3222'),
+('TG0450', 'ICT3234'),
+('TG0478', 'ICT3234'),
+('TG0478', 'ICT3112'),
+('TG0502', 'BST3133'),
+('TG0503', 'ET3112'),
+('TG0601', 'ICT2112'),
+('TG0650', 'ICT2223'),
+('TG0678', 'ET2243'),
+('TG0701', 'ICT2223'),
+('TG0756', 'BST2113'),
+('TG0789', 'ET2243'),
+('TG0800', 'BST2213'),
+('TG0811', 'BST2113'),
+('TG0900', 'ET2122'),
+('TG0998', 'ET2122'),
+('TG0998', 'ET2243'),
+('TG1010', 'BST1222'),
+('TG1017', 'BST1113'),
+('TG1036', 'ET1112'),
+('TG1067', 'BST1222'),
+('TG1100', 'ICT1242'),
+('TG1145', 'ICT1242'),
+('TG1198', 'BST1222');
+
+
+ALTER TABLE student_course
+ADD FOREIGN KEY(STUDENT_Reg_no) REFERENCES student(Reg_no);
+
+ALTER TABLE student_course
+ADD FOREIGN KEY(COURSE_code) REFERENCES course(course_code);
+
+ALTER TABLE student_department
+ADD FOREIGN KEY(STUDENT_Reg_no) REFERENCES student(Reg_no);
+
+ALTER TABLE student_department
+ADD FOREIGN KEY(DEPARTMENT_name) REFERENCES department(name);
+
+ALTER TABLE student_login
+ADD FOREIGN KEY(Reg_no) REFERENCES student(Reg_no);
+
+

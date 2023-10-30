@@ -1,0 +1,203 @@
+--------------------------------------VIEWS----------------------------------------------
+
+01. GPA view
+
+CREATE VIEW StudentGPA AS
+SELECT STUDENT_Reg_no AS 'Student ID number', SUM(Credits * GPV_Value) / SUM(Credits) AS 'GPA'
+FROM Course c, result s
+WHERE c.course_code = s.Course_code
+GROUP BY STUDENT_Reg_no;
+
+SELECT * FROM StudentGPA;
+
+02. View to define levels of students
+
+CREATE VIEW Level AS
+SELECT Entrance_year, 
+       CASE
+           WHEN Entrance_year = '2018' THEN 'Level 4'
+           WHEN Entrance_year = '2019' THEN 'Level 3'
+           WHEN Entrance_year = '2020' THEN 'Level 2'
+           WHEN Entrance_year = '2021' THEN 'Level 1'
+           ELSE 0 
+       END AS Level,
+       COUNT(*) AS StudentCount
+FROM Student
+GROUP BY Entrance_year, Level
+ORDER BY Level;
+
+SELECT * FROM Level;
+
+
+
+
+
+
+
+
+
+
+----------------------------------------PROCEDURES---------------------------------------
+
+01. Procedure to change department name and the course code for a given student tg number.
+
+DELIMITER //
+CREATE PROCEDURE updateacademics(IN Reg_No CHAR(5), IN dep_name VARCHAR(10), IN course_code CHAR(7))
+BEGIN
+	UPDATE student_department SET DEPARTMENT_name=dep_name WHERE STUDENT_Reg_no=Reg_NO;
+	UPDATE student_course SET COURSE_code=course_code WHERE STUDENT_Reg_no = Reg_No;
+END//
+DELIMITER ;
+
+CALL updateacademics("TG0200", "ICT", "ICR4243");
+
+
+02. Procedure to insert a student record
+
+DELIMITER //
+CREATE PROCEDURE insertstudent(IN Reg_no CHAR(6), IN First_name VARCHAR(25), IN Last_name VARCHAR(25),IN Email VARCHAR(30),IN Home_address VARCHAR(30),IN Street_address VARCHAR(50), IN Country VARCHAR(25))
+
+BEGIN
+	SELECT 'Example format- ('TG9999', 'First_name', 'Last_name', 'person@gmail.com', 'No99', 'Province/city - Road name', 'Country name');' As 'Format';
+	INSERT INTO student(Reg_no, First_name, Last_name, Email, Home_address, Street_address, country)
+ VALUES(Reg_no, First_name, Last_name, Email, Home_address, Street_address, country);
+	
+UPDATE Student
+SET Entrance_year = '2018'
+WHERE Reg_No BETWEEN 'TG0200'  AND 'TG0399'
+ORDER BY Reg_No ASC;
+
+UPDATE Student
+SET Entrance_year = '2019'
+WHERE Reg_No BETWEEN 'TG0400'  AND 'TG0599'
+ORDER BY Reg_No ASC;
+
+UPDATE Student
+SET Entrance_year = '2020'
+WHERE Reg_No BETWEEN 'TG0600'  AND 'TG0999'
+ORDER BY Reg_No ASC;
+
+UPDATE Student
+SET Entrance_year = '2021'
+WHERE Reg_No BETWEEN 'TG1000'  AND 'TG1200'
+ORDER BY Reg_No ASC;
+
+END//
+
+DELIMITER ;
+
+CALL insertStudent('TG1067', 'Tharindu', 'Sithum', 'TharidSitu88@example.com', '123 Main St', 'Mathale - Temple Road', 'Sri Lanka');
+
+
+03. A procedure to select students for a given street address
+
+DELIMITER //
+CREATE PROCEDURE stud_place(IN province_name VARCHAR(15))
+BEGIN
+	SELECT 'Enter a city or a province starting from capital letters' AS 'Instructions';
+	SELECT Reg_no As 'Student Register Number', First_name AS 'Student First Name', Last_name AS 'Student Last name'
+	FROM Student
+	WHERE Street_address LIKE province_name;
+END//
+
+DELIMITER ;
+
+CALL stud_place('Piliyandala');
+
+04. Select the count of students for a given department
+
+DELIMITER //
+
+CREATE PROCEDURE stud_count(IN Dep_name VARCHAR(3))
+BEGIN
+	SELECT COUNT(STUDENT_Reg_no) AS 'Number of Students over all levels within that department'
+	FROM Student_department
+	WHERE DEPARTMENT_name = Dep_name;
+END//
+
+DELIMITER ;
+
+CALL stud_count('ICT');
+
+05. Select the tg numbers of students for a given course module
+
+DELIMITER //
+
+CREATE PROCEDURE enrol_stud(IN course_code VARCHAR(7))
+BEGIN
+	SELECT STUDENT_Reg_no AS 'Students enrolled to the given course'
+	FROM student_course
+	WHERE COURSE_code = course_code;
+END//
+
+DELIMITER ;
+
+CALL enrol_stud('ICT4123');
+
+
+06. Procedure to enter a course credit value
+
+DELIMITER //
+
+CREATE PROCEDURE Credit()
+BEGIN
+    ALTER TABLE course ADD COLUMN Credits INT;
+
+
+    UPDATE course
+    SET Credits = CASE
+        WHEN course_code = 'BST1113' THEN 1
+        WHEN course_code = 'BST1222' THEN 2
+        WHEN course_code = 'BST2113' THEN 3
+        WHEN course_code = 'BST2213' THEN 4
+        WHEN course_code = 'BST3133' THEN 1
+        WHEN course_code = 'BST3222' THEN 2
+        WHEN course_code = 'BST4113' THEN 3
+        WHEN course_code = 'BST4222' THEN 4
+        WHEN course_code = 'ENG1212' THEN 1
+        WHEN course_code = 'ET1112' THEN 2
+        WHEN course_code = 'ET1223' THEN 3
+        WHEN course_code = 'ET2122' THEN 4
+        WHEN course_code = 'ET2243' THEN 1
+        WHEN course_code = 'ET3112' THEN 2
+        WHEN course_code = 'ET3222' THEN 3
+        WHEN course_code = 'ET4114' THEN 4
+        WHEN course_code = 'ET4242' THEN 1
+        WHEN course_code = 'ICT1112' THEN 2
+        WHEN course_code = 'ICT1123' THEN 3
+        WHEN course_code = 'ICT1242' THEN 4
+        WHEN course_code = 'ICT1243' THEN 1
+        WHEN course_code = 'ICT1244' THEN 2
+        WHEN course_code = 'ICT1245' THEN 3
+        WHEN course_code = 'ICT1246' THEN 4
+        WHEN course_code = 'ICT1247' THEN 1
+        WHEN course_code = 'ICT2112' THEN 2
+        WHEN course_code = 'ICT2223' THEN 3
+        WHEN course_code = 'ICT3112' THEN 4
+        WHEN course_code = 'ICT3234' THEN 1
+        WHEN course_code = 'ICT4123' THEN 2
+        WHEN course_code = 'ICT4243' THEN 3
+        ELSE 4
+    END;
+END //
+
+DELIMITER ;
+
+CALL Credit();
+
+07. Add Grade Point Value Column
+
+DELIMITER //
+
+CREATE PROCEDURE Gpv()
+BEGIN
+ALTER TABLE result ADD GPV_Value DECIMAL(3, 1);
+UPDATE result SET GPV_Value = ROUND(0.1 + (RAND() * 3.8), 1);
+END//
+
+DELIMITER ;
+
+CALL Gpv();
+
+
+

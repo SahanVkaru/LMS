@@ -1,0 +1,185 @@
+CREATE TABLE COURSE (
+  course_code ChAR(7) NOT NULL,
+  name VARCHAR(255) NULL,
+  course_hours DECIMAL NULL,
+  department_name VARCHAR(10) NULL,
+  PRIMARY KEY (course_code)
+);
+
+
+CREATE TABLE labsheet (
+  labsheet_id CHAR(9) NOT NULL,
+  title VARCHAR(255) NULL,
+  due_date DATETIME NULL,
+  course_code CHAR(7) NOT NULL,
+  PRIMARY KEY (labsheet_id),
+  FOREIGN KEY (course_code) REFERENCES COURSE(course_code)
+);
+
+
+CREATE TABLE Past_Papers (
+  past_paper_index INT (3) NOT NULL AUTO_INCREMENT,
+  paper_title VARCHAR(255) NOT NULL,
+  year YEAR NOT NULL,
+  level CHAR(6) NOT NULL,
+  semester CHAR(4) NOT NULL,
+  course_code CHAR(7) NOT NULL,
+  PRIMARY KEY (past_paper_index),
+  FOREIGN KEY (course_code) REFERENCES COURSE (course_code)
+);
+
+
+
+INSERT INTO course (course_code, name, course_hours, department_name) VALUES
+  ('ICT1242', 'Computer Architecture', 30, 'ICT'),
+  ('ICT1243', 'Database Management Systems', 30, 'ICT'),
+  ('ICT1244', 'Database Management Systems Practicum', 60, 'ICT'),
+  ('ICT1245', 'Computer Networks', 60, 'ICT'),
+  ('ICT1246', 'Discrete Mathematics', 45, 'ICT'),
+  ('ICT1247', 'Server-Side Web Development', 60, 'ICT'),
+  ('ENG1212', 'English II', 30, 'MTD'),
+  ('ICT1112', 'Introduction to Programming', 45, 'ICT'),
+  ('ICT1123', 'Web Development Fundamentals', 30, 'ICT'),
+  ('ICT2112', 'Software Development Fundamentals', 45, 'ICT'),
+ ('ICT2223', 'Object-Oriented Programming', 45, 'ICT'),
+ ('ICT3112', 'Database Administration', 42, 'ICT'),
+ ('ICT3234', 'Machine Learning and AI', 45, 'ICT'),
+ ('ICT4123', 'Cybersecurity Management', 38, 'ICT'),
+ ('ICT4243', 'Ethical Hacking and Penetration Testing', 38, 'ICT'),
+ ('ET1112', 'Engineering Fundamentals', 45, 'ET'),
+ ('ET1223', 'Technical Drawing and Blueprint Reading', 38, 'ET'),
+ ('ET2122', 'Fluid Mechanics', 42, 'ET'),
+ ('ET2243', 'Mechanical Design and Analysis', 40, 'ET'),
+ ('ET3112', 'Engineering Project Management', 40, 'ET'),
+ ('ET3222', 'Computer Networks for Engineers', 60, 'ET'),
+ ('ET4114', 'Robotics and Automation', 80, 'ET'),
+ ('ET4242', 'Advanced Manufacturing Processes', 40, 'ET'),
+ ('BST1113', 'Introduction to Biological Systems', 45, 'BST'),
+ ('BST1222', 'Bioinformatics', 45, 'BST'),
+ ('BST2113', 'Biochemistry', 60, 'BST'),
+ ('BST2213', 'Plant Biotechnology', 60, 'BST'),
+ ('BST3133', 'Food Biotechnology', 40, 'BST'),
+ ('BST3222', 'Stem Cell Biology', 45, 'BST'),
+ ('BST4113', 'Pharmacology and Drug Development', 40, 'BST'),
+ ('BST4222', 'Biosecurity and Biosafety', 45, 'BST');
+
+
+
+
+
+INSERT INTO labsheet (labsheet_id, title, due_date, course_code) VALUES
+  ('ICT124201', 'Computer Architecture Practical 01', '2023-11-01 15:00:00', 'ICT1242'),
+  ('ICT124312', 'Database Management Systems Practical 12', '2023-11-24 00:00:00', 'ICT1243'),
+  ('ICT124424', 'Database Management Systems Practicum 24', '2023-12-06 09:30:00', 'ICT1244'),
+  ('ICT124536', 'Computer Networks Practical 36', '2023-12-18 19:15:00', 'ICT1245'),
+  ('ICT124648', 'Discrete Mathematics Practical 48', '2023-12-30 13:45:00', 'ICT1246'),
+  ('ICT124760', 'Server-Side Web Development Practical 60', '2024-01-11 08:30:00', 'ICT1247'),
+  ('ENG121213', 'English II Practical 13', '2023-11-03 13:00:00', 'ENG1212'),
+  ('ICT111202', 'Introduction to Programming Practical 02', '2023-11-04 14:00:00', 'ICT1112'),
+  ('ICT112317', 'Web Development Fundamentals Practical 17', '2023-11-05 15:00:00', 'ICT1123'),
+  ('ICT211215', 'Software Development Fundamentals Practical 15', '2023-11-06 16:00:00', 'ICT2112'),
+  ('ICT222314', 'Object-Oriented Programming Practical 14', '2023-11-07 17:00:00', 'ICT2223'),
+  ('ICT311206', 'Database Administration Practical 06', '2023-11-08 18:00:00', 'ICT3112'),
+  ('ICT323401', 'Machine Learning and AI Practical 01', '2023-11-09 19:00:00', 'ICT3234'),
+  ('ICT412312', 'Cybersecurity Management Practical 12', '2023-11-10 20:00:00', 'ICT4123'),
+  ('ICT424309', 'Ethical Hacking and Penetration Testing Practical 09', '2023-11-11 21:00:00', 'ICT4243'),
+  ('ET111203', 'Engineering Fundamentals Practical 03', '2023-11-12 22:00:00', 'ET1112'),
+  ('ET122312', 'Technical Drawing and Blueprint Reading Practical 12', '2023-11-13 23:00:00', 'ET1223'),
+  ('ET212215', 'Fluid Mechanics Practical 15', '2023-11-14 10:00:00', 'ET2122'),
+  ('ET224308', 'Mechanical Design and Analysis Practical 08', '2023-11-15 11:00:00', 'ET2243'),
+  ('ET311210', 'Engineering Project Management Practical 10', '2023-11-16 12:00:00', 'ET3112'),
+  ('ET322203', 'Computer Networks for Engineers Practical 03', '2023-11-17 13:00:00', 'ET3222'),
+  ('ET411410', 'Robotics and Automation Practical 10', '2023-11-18 14:00:00', 'ET4114'),
+  ('ET424214', 'Advanced Manufacturing Processes Practical 14', '2023-11-19 15:00:00', 'ET4242'),
+  ('BST111303', 'Introduction to Biological Systems Practical 03', '2023-11-20 16:00:00', 'BST1113'),
+  ('BST122212', 'Bioinformatics Practical 12', '2023-11-21 17:00:00', 'BST1222'),
+  ('BST211317', 'Biochemistry Practical 17', '2023-11-22 18:00:00', 'BST2113'),
+  ('BST221206', 'Plant Biotechnology Practical 06', '2023-11-23 19:00:00', 'BST2213'),
+  ('BST313401', 'Food Biotechnology Practical 01', '2023-11-24 20:00:00', 'BST3133'),
+  ('BST322312', 'Stem Cell Biology Practical 12', '2023-11-25 21:00:00', 'BST3222'),
+  ('BST411209', 'Pharmacology and Drug Development Practical 09', '2023-11-26 22:00:00', 'BST4113'),
+  ('BST422210', 'Biosecurity and Biosafety Practical 10', '2023-11-27 23:00:00', 'BST4222');
+
+
+
+
+INSERT INTO Past_Papers (paper_title, year, level, semester, course_code) VALUES
+  ('Computer Architecture 2015 Level 1 Semester 2', 2015, 'level1', 'sem2', 'ICT1242'),
+  ('Database Management Systems 2016 Level 1 Semester 2', 2016, 'level1', 'sem2', 'ICT1243'),
+  ('Database Management Systems Practicum 2017 Level 1 Semester 2', 2017, 'level1', 'sem2', 'ICT1244'),
+  ('Computer Networks 2018 Level 1 Semester 2', 2018, 'level1', 'sem2', 'ICT1245'),
+  ('Discrete Mathematics 2019 Level 1 Semester 2', 2019, 'level1', 'sem2', 'ICT1246'),
+  ('Server-Side Web Development 2020 Level 1 Semester 2', 2020, 'level1', 'sem2', 'ICT1247'),
+  ('English II 2021 Level 1 Semester 2', 2021, 'level2', 'sem1', 'ENG1212'),
+  ('Introduction to Programming 2015 Level 1 Semester 1', 2015, 'level1', 'sem1', 'ICT1112'),
+  ('Web Development Fundamentals 2016 Level 1 Semester 1', 2016, 'level1', 'sem1', 'ICT1123'),
+  ('Software Development Fundamentals 2017 Level 2 Semester 1', 2017, 'level2', 'sem1', 'ICT2112'),
+  ('Object-Oriented Programming 2018 Level 2 Semester 2', 2018, 'level2', 'sem2', 'ICT2223'),
+  ('Database Administration 2019 Level 3 Semester 1', 2019, 'level3', 'sem1', 'ICT3112'),
+  ('Machine Learning and AI 2020 Level 3 Semester 2', 2020, 'level3', 'sem2', 'ICT3234'),
+  ('Cybersecurity Management 2021 Level 4 Semester 1', 2021, 'level4', 'sem1', 'ICT4123'),
+  ('Ethical Hacking and Penetration Testing 2015 Level 4 Semester 2', 2015, 'level4', 'sem2', 'ICT4243'),
+  ('Engineering Fundamentals 2016 Level 1 Semester 1', 2016, 'level1', 'sem1', 'ET1112'),
+  ('Technical Drawing and Blueprint Reading 2017 Level 1 Semester 2', 2017, 'level1', 'sem2', 'ET1223'),
+  ('Fluid Mechanics 2018 Level 2 Semester 1', 2018, 'level2', 'sem1', 'ET2122'),
+  ('Mechanical Design and Analysis 2019 Level 2 Semester 2', 2019, 'level2', 'sem2', 'ET2243'),
+  ('Engineering Project Management 2020 Level 3 Semester 1', 2020, 'level3', 'sem1', 'ET3112'),
+  ('Computer Networks for Engineers 2021 Level 3 Semester 2', 2021, 'level3', 'sem2', 'ET3222'),
+  ('Robotics and Automation 2015 Level 4 Semester 1', 2015, 'level4', 'sem1', 'ET4114'),
+  ('Advanced Manufacturing Processes 2016 Level 4 Semester 2', 2016, 'level4', 'sem2', 'ET4242'),
+  ('Introduction to Biological Systems 2017 Level 1 Semester 1', 2017, 'level1', 'sem1', 'BST1113'),
+  ('Bioinformatics 2018 Level 1 Semester 2', 2018, 'level1', 'sem2', 'BST1222'),
+  ('Biochemistry 2019 Level 2 Semester 1', 2019, 'level2', 'sem1', 'BST2113'),
+  ('Plant Biotechnology 2020 Level 2 Semester 2', 2020, 'level2', 'sem2', 'BST2213'),
+  ('Food Biotechnology 2021 Level 3 Semester 1', 2021, 'level3', 'sem1', 'BST3133'),
+  ('Stem Cell Biology 2015 Level 3 Semester 2', 2015, 'level3', 'sem2', 'BST3222'),
+  ('Pharmacology and Drug Development 2016 Level 4 Semester 1', 2016, 'level4', 'sem1', 'BST4113'),
+  ('Biosecurity and Biosafety 2017 Level 4 Semester 2', 2017, 'level4', 'sem2', 'BST4222');
+
+
+ALTER TABLE COURSE MODIFY name VARCHAR(255);
+
+ALTER TABLE Past_Papers MODIFY paper_title VARCHAR(255);
+
+ALTER TABLE labsheet MODIFY title VARCHAR(255);
+
+
+ALTER TABLE COURSE ADD FOREIGN KEY (department_name) REFERENCES department(Name);
+
+
+UPDATE table_name
+SET column1 = value1, column2 = value2, ...
+WHERE condition;
+
+
+
+
+
+
+
+//// EXTRA ERROR HANDLING WORK...
+
+DELETE from repeat_student where RESULT_STUDENT_Reg_no = 'TG1198';
+
+UPDATE student_course SET Course_code=4123 where STUDENT_Reg_no ='TG0200' AND COURSE_code ='ICT4223';
+
+UPDATE student_course SET Course_code='ET2243' where STUDENT_Reg_no ='TG0998' AND COURSE_code ='ET2143';
+
+UPDATE attendance SET Course_code='ICT4123' where STUDENT_Reg_no ='TG0200' AND COURSE_code ='ICT4223';
+
+ UPDATE assement SET Course_code='ICT4123' where STUDENT_Reg_no ='TG0200' AND COURSE_code ='ICT4223';
+
+ UPDATE student_account SET STUDENT_USERNAME='TG1027' WHERE STUDENT_USERNAME='TG1017';
+
+ UPDATE course SET department_name='MDS' WHERE department_name='MTD';
+
+
+UPDATE student_course
+SET STUDENT_Reg_no = 'TG1027'
+WHERE STUDENT_Reg_no = 'TG1017';
+
+UPDATE student_department SET STUDENT_Reg_no = 'TG1027' WHERE STUDENT_Reg_no = 'TG1017';
+
+UPDATE student_login SET Reg_no = 'TG1027' WHERE Reg_no = 'TG1017';
+
+

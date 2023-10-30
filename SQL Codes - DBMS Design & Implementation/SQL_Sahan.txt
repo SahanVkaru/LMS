@@ -1,0 +1,93 @@
+ SET FOREIGN_KEY_CHECKS=0; 
+
+CREATE TABLE Staff_department(
+    Staff_no char(5),
+     Department_name Varchar(10),
+     PRIMARY KEY (Staff_no,Department_name),
+     FOREIGN KEY(Staff_no) REFERENCES Staff(Staff_no));
+
+ CREATE TABLE Staff_telephone(
+     Staff_no char(5),
+     Telephone char(11),
+     PRIMARY KEY(Telephone,Staff_no),
+     FOREIGN KEY(Staff_no) REFERENCES Staff(Staff_no));
+
+
+CREATE TABLE Staff(
+     Staff_no CHAR(5),
+     Name VARCHAR(25),
+     Position VARCHAR(20),
+     Gender VARCHAR(6),
+     Home_address VARCHAR(30),
+     Street_address VARCHAR(20),
+     Country VARCHAR(25),
+     PRIMARY KEY(Staff_no));
+
+
+
+
+
+
+INSERT INTO Staff VALUES
+("ADM01", 'Sahan Viduranaga', 'Administrator', 'MALE', 'No 57', 'Kalawana', 'Sri Lanka'),
+("DEA01", 'Nimala Fernando', 'Dean', 'MALE', '123 Main Street', 'Cityville', 'Sri Lanka'),
+("TEO01", 'Jane Smith', 'Technical Officer', 'FEMALE', '456 Elm Avenue', 'Townsville', 'Amarica'),
+("LEC01", 'Michael Johnson', 'Lecturer', 'MALE', '789 Oak Drive', 'Villagetown', 'United Kindom '),
+("LEC02", 'Alice Williams', 'Lecturer', 'FEMALE', '987 Pine Lane', 'Countryside', 'United State');
+
+
+INSERT INTO Staff VALUES
+("TEO02", 'Kamal Perera', 'Technical Officer', 'MALE', '42 Lake Road', 'Harbor City', 'Sri Lanka'),
+("TEO03", 'Ranjan Rajapakse', 'Technical Officer', 'MALE', '88 Red Avenue', 'Hometown', 'Sri Lanka'),
+("LEC03", 'Dilani Silva', 'Lecturer', 'FEMALE', '101 Maple Drive', 'Valleyville', 'Sri Lanka'),
+("LEC04", 'Samadhi Jayasinghe', 'Lecturer', 'FEMALE', '123 Oak Lane', 'Mountainside', 'Sri Lanka');
+
+
+
+INSERT INTO staff_telephone VALUES
+  ("ADM01", '07123456789'),
+  ("TEO01", '08112345678'),
+  ("DEA01", '07198765432'),
+  ("LEC01", '01154321987'),
+  ("ADM01", '07534567890');
+
+
+
+INSERT INTO Staff_department (Staff_no, Department_name)
+VALUES("LEC02", 'ET'),
+  ("TEO02", 'BST'),
+  ("TEO01","ET");
+
+
+
+
+CREATE TABLE Staff_account(
+Staff_account_type Varchar(30),
+Staff_user_name char(5) NOT NULL,
+Staff_password Varchar(30) NOT NULL,
+PRIMARY KEY(Staff_user_name),
+FOREIGN KEY(Staff_user_name) REFERENCES staff(Staff_no));
+
+
+INSERT INTO Staff_account (Staff_account_type, Staff_user_name, Staff_password)
+VALUES
+  ('Administrator Account', 'ADM01', 'adminpass123'),
+  ('Lecturer Account', 'LEC01', 'lecturerpass456'),
+  ('Teaching Assistant Account', 'TEO01', 'tauser789'),
+  ('Dean Account', 'DEA01', 'deanpass432'),
+  ('Lecturer Account', 'LEC02', 'lecturer2pass987');
+
+
+
+INSERT INTO Staff_account (Staff_account_type, Staff_user_name, Staff_password)
+VALUES
+  ('Lecturer Account', 'LEC05', 'lecturer5pass123'),
+  ('Lecturer Account', 'LEC06', 'lecturer6pass456'),
+  ('Lecturer Account', 'LEC07', 'lecturer7pass789'),
+  ('Lecturer Account', 'LEC08', 'lecturer8pass321'),
+  ('Lecturer Account', 'LEC09', 'lecturer9pass654'),
+  ('Lecturer Account', 'LEC10', 'lecturer10pass987');
+
+
+
+ SET FOREIGN_KEY_CHECKS=1;

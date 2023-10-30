@@ -1,0 +1,181 @@
+CREATE TABLE ASSEMENT
+( Submisson_id CHAR(5) NOT NULL,
+  Assement_type VARCHAR(30) ,
+  Score INT ,
+  Due_date DATETIME ,
+  Submission_date  DATETIME ,
+  Attendance_id_FK CHAR(5) NOT NULL,
+  Course_code   CHAR(7) NOT NULL,
+  STUDENT_Reg_no CHAR(6) NOT NULL,
+  PRIMARY KEY (Submisson_id)
+);
+CREATE TABLE ATTENDANCE
+( Attendance_id CHAR(5) NOT NULL,
+  Medical_status BOOLEAN NULL,
+  Attendance_status BOOLEAN,
+  Date DATE ,
+  Course_code CHAR(7) NOT NULL,
+  STUDENT_Reg_no CHAR(6) NOT NULL,
+  PRIMARY KEY (Attendance_id)
+);
+CREATE TABLE STUDENT_ACCOUNT
+(
+  STUDENT_USERNAME CHAR(6) NOT NULL,
+  STUDENT_Account_type VARCHAR(30) NOT NULL,
+  STUDENT_Password VARCHAR(30) NOT NULL,
+  PRIMARY KEY (STUDENT_USERNAME)
+);
+
+CREATE TABLE REPEAT_STUDENT
+( RESULT_STUDENT_Reg_no CHAR(6) NOT NULL,
+  RESULT_Course_code CHAR(7) NOT NULL,
+  Repeat_count INT,
+  PRIMARY KEY (RESULT_STUDENT_Reg_no, RESULT_Course_code)
+);
+
+CREATE TABLE RESULT
+( STUDENT_Reg_no CHAR(6) NOT NULL,
+  Course_code CHAR(7) NOT NULL,
+  Marks INT,
+  PRIMARY KEY (STUDENT_Reg_no, Course_code)
+);
+
+
+INSERT INTO STUDENT_ACCOUNT (STUDENT_USERNAME, STUDENT_Account_type, STUDENT_Password)
+VALUES
+('TG0200', 'internal', 'password1'),
+('TG0203', 'external', 'password2'),
+('TG0207', 'internal', 'password3'),
+('TG0240', 'external', 'password4'),
+('TG0251', 'internal', 'password5'),
+('TG0267', 'external', 'password6'),
+('TG0280', 'internal', 'password7'),
+('TG0291', 'external', 'password8'),
+('TG0300', 'internal', 'password9'),
+('TG0305', 'external', 'password10'),
+('TG0320', 'internal', 'password11'),
+('TG0340', 'external', 'password12'),
+('TG0355', 'internal', 'password13'),
+('TG0400', 'external', 'password14'),
+('TG0420', 'internal', 'password15'),
+('TG0450', 'external', 'password16'),
+('TG0478', 'internal', 'password17'),
+('TG0502', 'external', 'password18'),
+('TG0503', 'internal', 'password19'),
+('TG0601', 'external', 'password20'),
+('TG0650', 'internal', 'password21'),
+('TG0678', 'external', 'password22'),
+('TG0701', 'internal', 'password23'),
+('TG0756', 'external', 'password24'),
+('TG0789', 'internal', 'password25'),
+('TG0800', 'external', 'password26'),
+('TG0811', 'internal', 'password27'),
+('TG0900', 'external', 'password28'),
+('TG0998', 'internal', 'password29'),
+('TG1010', 'external', 'password30'),
+('TG1017', 'internal', 'password31'),
+('TG1036', 'external', 'password32'),
+('TG1067', 'internal', 'password33'),
+('TG1100', 'external', 'password34'),
+('TG1145', 'internal', 'password35'),
+('TG1198', 'external', 'password36');
+
+
+INSERT INTO ATTENDANCE (Attendance_id, Medical_status, Attendance_status, Date, Course_code, STUDENT_Reg_no)
+VALUES
+('A0001', 1, 0, '2023-10-25', 'ICT4243', 'TG0200'),
+('A0002', 0, 0, '2023-10-25', 'ICT4123', 'TG0200'),
+('A0003', 0, 1, '2023-10-25', 'ICT4123', 'TG0203'),
+('A0004', 0, 1, '2023-10-25', 'ICT4123', 'TG0207'),
+('A0005', 1, 0, '2023-10-25', 'ICT4243', 'TG0240'),
+('A0006', 1, 0, '2023-10-30', 'ICT4123', 'TG0200');
+
+
+INSERT INTO REPEAT_STUDENT VALUES
+('TG0280', 'ET4114', 1),
+('TG0400', 'ICT3112',1),
+('TG0811', 'BST2113', 1),
+('TG0340', 'ET4242', 1); 
+
+INSERT INTO RESULT VALUES
+('TG0200', 'ICT4243', 85),
+('TG0203', 'ICT4123', 92),
+('TG0207', 'ICT4123', 78),
+('TG0240', 'ICT4243', 86),
+('TG0251', 'ICT4243', 93),
+('TG0267', 'BST4113', 76),
+('TG0280', 'ET4114', 88),
+('TG0291', 'ICT4123', 72),
+('TG0300', 'BST4113', 90),
+('TG0305', 'BST4113', 79),
+('TG0320', 'ICT4243', 87),
+('TG0340', 'ET4242', 78),
+('TG0355', 'ET4114', 95),
+('TG0400', 'ICT3112', 89),
+('TG0420', 'BST3222', 75),
+('TG0450', 'ICT3234', 87),
+('TG0478', 'ICT3234', 25),
+('TG0478', 'ICT3112', 30),
+('TG0502', 'BST3133', 79),
+('TG0503', 'ET3112', 40),
+('TG0601', 'ICT2112', 30),
+('TG0650', 'ICT2223', 87),
+('TG0678', 'ET2243', 93),
+('TG0701', 'ICT2223', 85),
+('TG0756', 'BST2113', 25),
+('TG0789', 'ET2243', 76),
+('TG0800', 'BST2213', 89),
+('TG0811', 'BST2113', 23),
+('TG0900', 'ET2122', 87),
+('TG0998', 'ET2122', 16);
+
+INSERT INTO ASSEMENT (Submisson_id,Assement_type,Score,Due_date,Submission_date, Attendance_id_FK,Course_code,STUDENT_Reg_no)
+VALUES
+('S0001', 'Homework', 95, '2023-11-05', '2023-11-04', 'A0001', 'ICT4223', 'TG0200'),
+('S0002', 'MID_exam', 96, '2023-11-10', '2023-11-04', 'A0001', 'ICT4223', 'TG0200'),
+('S0003', 'MID_exam', 88, '2023-11-10', '2023-11-03', 'A0002', 'ICT4123', 'TG0203'),
+('S0004', 'Homework', 92, '2023-11-12', '2023-11-04', 'A0003', 'ICT4123', 'TG0207');
+
+
+
+ALTER TABLE STUDENT_ACCOUNT
+ADD FOREIGN KEY (STUDENT_USERNAME)
+REFERENCES STUDENT(Reg_no);
+
+ALTER TABLE ASSEMENT
+ADD FOREIGN KEY (Attendance_id_FK)
+REFERENCES ATTENDANCE (Attendance_id);
+
+ALTER TABLE ASSEMENT
+ADD FOREIGN KEY (Course_code)
+REFERENCES COURSE (course_code);
+
+ALTER TABLE ASSEMENT
+ADD FOREIGN KEY (STUDENT_Reg_no)
+REFERENCES STUDENT (Reg_no);
+
+ALTER TABLE ATTENDANCE
+ADD FOREIGN KEY (STUDENT_Reg_no)
+REFERENCES STUDENT(Reg_no);
+
+ALTER TABLE ATTENDANCE
+ADD FOREIGN KEY (Course_code)
+REFERENCES Course(course_code);
+
+ALTER TABLE REPEAT_STUDENT
+ADD FOREIGN KEY (RESULT_STUDENT_Reg_no)
+REFERENCES RESULT (STUDENT_Reg_no);
+
+ALTER TABLE REPEAT_STUDENT
+ADD FOREIGN KEY (RESULT_Course_code)
+REFERENCES RESULT (Course_code);
+
+ALTER TABLE RESULT
+ADD FOREIGN KEY (STUDENT_Reg_no)
+REFERENCES STUDENT (Reg_no);
+
+ALTER TABLE RESULT
+ADD FOREIGN KEY (Course_code)
+REFERENCES COURSE (course_code);
+
+

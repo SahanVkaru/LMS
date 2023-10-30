@@ -1,0 +1,26 @@
+mysql> CREATE USER 'Admin'@'localhost' IDENTIFIED BY 'admin123';
+Query OK, 0 rows affected (0.53 sec)
+
+mysql> GRANT ALL PRIVILEGES ON lms_grp_10.* TO 'Admin'@'localhost' WITH GRANT OPTION;
+Query OK, 0 rows affected (0.49 sec)
+
+mysql> FLUSH PRIVILEGES;
+Query OK, 0 rows affected (0.15 sec)
+
+mysql> CREATE USER 'Dean'@'localhost' IDENTIFIED BY 'deam123';
+Query OK, 0 rows affected (0.20 sec)
+
+mysql> GRANT ALL PRIVILEGES ON lms_grp_10.* TO 'Dean'@'localhost';
+Query OK, 0 rows affected (0.13 sec)
+
+mysql> FLUSH PRIVILEGES;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> CREATE USER 'Lecturer'@'localhost' IDENTIFIED BY 'Lec123';
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> GRANT SELECT, INSERT, UPDATE, DELETE ON lms_grp_10.* TO 'Lecturer'@'localhost';
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> FLUSH PRIVILEGES;
+Query OK, 0 rows affected (0.00 sec)

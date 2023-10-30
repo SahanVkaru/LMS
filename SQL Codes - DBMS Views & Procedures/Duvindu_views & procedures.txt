@@ -1,0 +1,180 @@
+
+
+//VIEWS
+
+CREATE VIEW  Result_Details AS 
+SELECT R.STUDENT_Reg_no , S.First_name , C.Course_code, R.Marks,
+CASE
+    WHEN marks >= 90 THEN 'A'
+    WHEN marks >= 80 THEN 'B'
+    WHEN marks >= 70 THEN 'C'
+    WHEN marks >= 60 THEN 'D'
+    ELSE 'F'
+END AS grade,
+CASE
+    WHEN RS.RESULT_STUDENT_Reg_no = R.STUDENT_Reg_no THEN 'repeat'
+    ELSE 'PASS'
+END AS repet_or_not,
+CASE
+    WHEN RS.Repeat_count is NULL THEN '0'
+    ELSE RS.Repeat_count
+END AS repet_count
+
+FROM STUDENT S 
+JOIN RESULT R ON S.Reg_no = R.STUDENT_Reg_no
+JOIN COURSE C ON C.course_code = R.Course_code
+LEFT JOIN REPEAT_STUDENT RS ON RS.RESULT_STUDENT_Reg_no = R.STUDENT_Reg_no;
+
+
+create view Assement_details AS 
+SELECT asse.*,CASE WHEN A.Attendance_status = 1 OR A.Medical_status = 1 THEN 'attend'  ELSE 'not_attend' END  AS "ATTENDECE_for_Assement"
+FROM assement asse ,attendance a 
+WHERE asse.Attendance_id_FK=a.Attendance_id;
+
+
+CREATE VIEW CA_ELIGIBILITY AS
+SELECT
+    STUDENT_Reg_no,
+    Course_code,
+    COUNT(Assement_type) AS Num_Assessments,
+    SUM(
+        CASE
+            WHEN Assement_type = 'Quize' AND ATTENDECE_for_Assement = 'attend' THEN (Score / 4) 
+            WHEN Assement_type = 'MID_exam' AND ATTENDECE_for_Assement = 'attend' THEN (Score / 2) 
+            ELSE 0
+        END
+    ) AS Final_CA_MARKES,
+    CASE
+        WHEN SUM(
+            CASE
+                WHEN Assement_type = 'Quize' AND ATTENDECE_for_Assement = 'attend' THEN (Score / 4) 
+                WHEN Assement_type = 'MID_exam' AND ATTENDECE_for_Assement = 'attend'THEN (Score / 2)
+                ELSE 0
+            END
+        ) >= 50  THEN 'eligible'
+        ELSE 'not eligible'
+    END AS CA_Eligibility
+FROM Assement_details
+WHERE (Assement_type = 'MID_exam' OR Assement_type = 'Quize') 
+GROUP BY STUDENT_Reg_no, Course_code;
+
+
+
+CREATE VIEW attendence_detalis AS
+SELECT
+    a.STUDENT_Reg_no,
+    a.Course_code,
+    SUM(CASE WHEN a.Attendance_status=1 OR a.Medical_status = 1 THEN 1  ELSE 0 END) AS 'Attendance_Count',
+    (((SUM(CASE WHEN a.Attendance_status=1 OR a.Medical_status = 1 THEN 1  ELSE 0 END)/15)*100)) AS 'Attendance_AS_A_presentage',
+	CASE
+        WHEN (((SUM(CASE WHEN a.Attendance_status=1 OR a.Medical_status = 1 THEN 1  ELSE 0 END)/15)*100)) >= 80  THEN 'eligible'
+        ELSE 'not eligible'
+    END AS ATTENDANCE_Eligibility
+FROM attendance a
+
+GROUP BY  STUDENT_Reg_no,Course_code;
+
+
+
+
+
+
+
+
+
+
+
+
+
+// PROCEDURES
+
+DELIMITER $$ 
+CREATE PROCEDURE `find_Result_of_a_course` (IN Course_code char(7))
+BEGIN
+SELECT * FROM result_details r WHERE r.Course_code= Course_code ;
+END $$
+DELIMITER ;
+
+
+DELIMITER $$ 
+CREATE PROCEDURE `find_Result_of_a_student` (IN STUDENT_Reg_no char(6))
+BEGIN
+SELECT * FROM result_details r 
+WHERE r.STUDENT_Reg_no = STUDENT_Reg_no ;
+END $$
+DELIMITER ;
+
+DELIMITER $$ 
+CREATE PROCEDURE `find_Result_of_student_course` (IN STUDENT_Reg_no char(6),IN Course_code char(7))
+BEGIN
+SELECT * FROM result_details r 
+WHERE r.STUDENT_Reg_no = STUDENT_Reg_no AND  r.Course_code= Course_code ;
+END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE `find_attendance_for_a_batch`(IN batch INT)
+BEGIN
+    SELECT a.*
+    FROM attendence_detalis a
+    JOIN student s ON s.Entrance_year = batch AND s.Reg_no = a.STUDENT_Reg_no;
+END$$
+DELIMITER ;
+
+s
+DELIMITER $$ 
+CREATE PROCEDURE `find_attendence_of_a_student` (IN STUDENT_Reg_no char(6))
+BEGIN
+SELECT * FROM attendence_detalis a
+WHERE a.STUDENT_Reg_no = STUDENT_Reg_no  ;
+END $$
+DELIMITER ;
+
+DELIMITER $$ 
+CREATE PROCEDURE `CA_DETAILS_of_a_COURSE` (IN Course_code char(7))
+BEGIN
+	select * FROM ca_eligibility c where c.Course_code = Course_code;
+END $$
+DELIMITER ;
+
+
+DELIMITER $$ 
+CREATE PROCEDURE `CA_DETAILS_of_a_Course_for_STUDENT` (IN STUDENT_Reg_no char(6),IN Course_code char(7))
+BEGIN
+select * FROM ca_eligibility c 
+where c.Course_code = Course_code AND c.STUDENT_Reg_no = STUDENT_Reg_no ;
+END $$
+DELIMITER ;
+
+DELIMITER $$ 
+CREATE PROCEDURE `CA_DETAILS_of_a__STUDENT` (IN STUDENT_Reg_no char(6))
+BEGIN
+select * FROM ca_eligibility c 
+where c.STUDENT_Reg_no = STUDENT_Reg_no ;
+END $$
+DELIMITER ;
+
+DELIMITER $$ 
+CREATE PROCEDURE `CA_DETAILS_of_a__batch` (IN batch INT(4))
+BEGIN
+SELECT c.* FROM ca_eligibility c,student s 
+WHERE s.Entrance_year = batch AND s.Reg_no = c.STUDENT_Reg_no;
+END $$
+DELIMITER ;
+
+
+DELIMITER $$
+CREATE PROCEDURE `insert_attendance_data`(
+    IN Attendance_id VARCHAR(5),
+    IN Medical_status boolean,
+    IN Attendance_status boolean,
+    IN Date DATE,
+    IN Course_code CHAR(7),
+    IN STUDENT_Reg_no CHAR(6)
+)
+BEGIN
+    INSERT INTO attendance(Attendance_id, Medical_status, Attendance_status, Date, Course_code, STUDENT_Reg_no)
+    VALUES (Attendance_id, Medical_status, Attendance_status, Date, Course_code, STUDENT_Reg_no);
+END$$
+DELIMITER ;
+

@@ -1,0 +1,154 @@
+////////////////////              VIEWS         //////////////////////////////
+
+
+
+/////   See all the courses a student is enrolled
+
+
+CREATE VIEW StudentCourses AS
+SELECT s.Reg_no, s.First_name, s.Last_name, c.course_code, c.name
+FROM Student s
+INNER JOIN Student_Course sc ON s.Reg_no = sc.STUDENT_Reg_no
+INNER JOIN course c ON sc.COURSE_code = c.course_code;
+
+
+
+
+//// Without Student Names
+
+CREATE VIEW CourseDetailsView AS
+SELECT student_course.COURSE_code, student_course.STUDENT_Reg_no, COURSE.name
+FROM student_course INNER JOIN COURSE ON student_course.COURSE_code=COURSE.course_code;
+
+
+
+
+//////   See all the labsheets a student needs to complete
+
+CREATE VIEW StudentLabsheets AS
+SELECT s.Reg_no, s.First_name, s.Last_name, ls.labsheet_id, ls.title, ls.due_date
+FROM Student s
+INNER JOIN Student_Course sc ON s.Reg_no = sc.STUDENT_Reg_no
+INNER JOIN labsheet ls ON sc.COURSE_code = ls.course_code;
+
+
+
+/////  See all the past papers available for a student's courses
+
+CREATE VIEW StudentPastPapers AS
+SELECT s.Reg_no, s.First_name, s.Last_name, pp.past_paper_index, pp.paper_title, pp.year, pp.level, pp.semester
+FROM Student s
+INNER JOIN Student_Course sc ON s.Reg_no = sc.STUDENT_Reg_no
+INNER JOIN Past_Papers pp ON sc.COURSE_code = pp.course_code;
+
+
+
+
+
+
+//////////////////////           PROCEDURES           ///////////////////
+
+
+///////////////////    To Get Course This Student Enrollment  /////////////////////
+
+
+DELIMITER //
+CREATE PROCEDURE GetStudentCourses(IN studentRegNo CHAR(6))
+BEGIN
+  SELECT c.course_code, c.name
+  FROM Student_Course sc
+  JOIN course c ON sc.COURSE_code = c.course_code
+  WHERE sc.STUDENT_Reg_no = studentRegNo;
+END //
+DELIMITER ;
+
+
+
+
+///////////////     To get Upcoming Labsheet for This Student    ///////////
+
+
+DELIMITER //
+CREATE PROCEDURE StudentUpcomeLab (IN studentRegNo CHAR(6))
+BEGIN
+  SELECT ls.labsheet_id, ls.title, ls.due_date
+  FROM Student_Course sc
+  JOIN labsheet ls ON sc.COURSE_code = ls.course_code
+  WHERE sc.STUDENT_Reg_no = studentRegNo AND ls.due_date > NOW();
+END //
+DELIMITER ;
+
+
+
+///////////////     To get Previous Labsheet for This Student    ///////////
+
+
+DELIMITER //
+CREATE PROCEDURE StudentPreLab (IN studentRegNo CHAR(6))
+BEGIN
+  SELECT ls.labsheet_id, ls.title, ls.due_date
+  FROM Student_Course sc
+  JOIN labsheet ls ON sc.COURSE_code = ls.course_code
+  WHERE sc.STUDENT_Reg_no = studentRegNo AND ls.due_date < NOW();
+END //
+DELIMITER ;
+
+
+
+
+
+
+///////////////// To add Labsheet as Lecture    ////////////////////
+
+
+DELIMITER //
+CREATE PROCEDURE AddLabSheet(
+  IN labsheet_id CHAR(9),
+  IN title VARCHAR(255),
+  IN due_date DATETIME,
+  IN course_code CHAR(7)
+)
+BEGIN
+  INSERT INTO labsheet (labsheet_id, title, due_date, course_code)
+  VALUES (labsheet_id, title, due_date, course_code);
+END //
+
+DELIMITER ;
+
+
+CALL AddLabSheet('ICT424310', 'TEST Lab Sheet', '2023-12-31 14:00:00', 'ICT4243');
+
+
+
+
+///////////////// To add Past Papers as Lecture    ////////////////////
+
+
+DELIMITER //
+
+CREATE PROCEDURE AddPastpapers(
+IN paper_title VARCHAR(255),
+IN year YEAR,
+IN level CHAR(6),
+IN semester CHAR(4),
+IN course_code CHAR(7)
+)
+
+BEGIN 
+	INSERT INTO Past_Papers (paper_title, year, level, semester, course_code)
+	VALUES (paper_title, year, level, semester, course_code );
+END //
+
+DELIMITER ;
+
+CALL AddPastPapers ('TEST Paper 1', 2022, 'level4', 'sem1', 'ICT4243');
+
+
+
+
+
+
+
+
+
+

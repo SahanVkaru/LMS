@@ -1,0 +1,413 @@
+////////////////////VIEWS//////////////////////////////
+.................................................................................................................................................
+
+Create View LectureAccount As
+     SELECT
+     Staff_user_name,
+     Name,
+     Staff_account_type,
+     Staff_password from staff,staff_account Where staff_account.staff_user_name=staff.staff_no;
+
+..............................................................................................................................................................
+..............................................................................................................................................................
+
+CREATE view lecturecountact AS
+    SELECT
+    staff_no,
+    telephone FROM staff_telephone;
+    
+......................................................................................................................................................
+
+CREATE VIEW Staffdepartment AS
+SELECT 
+    staff.staff_no,
+    staff.Name,
+    staff.Position,
+    Department_name
+FROM staff
+RIGHT JOIN staff_department ON staff.staff_no = staff_department.staff_no;
+
+
+
+
+
+///////////////////////////////////////////ACCOUNT DETAILS////////////////////////////////////////////////
+......................................................................................................................................................
+
+DELIMITER //
+
+CREATE PROCEDURE lectureAccount(IN lecid char(5))
+BEGIN
+    DECLARE lec_exists INT;
+    
+    SELECT COUNT(*) INTO lec_exists FROM LectureAccount WHERE Staff_user_name = lecid;
+
+    IF lec_exists = 0 THEN
+        SELECT "Lecture not found";
+    ELSE
+        SELECT "Successful account details";
+        SELECT * FROM LectureAccount WHERE Staff_user_name = lecid;
+    END IF;
+
+END//
+
+DELIMITER ;
+.............................................................................................................................................................
+
+///////////////////////////////////////ACCOUNT PASSWORD CHANGE////////////////////////////////////////////
+.............................................................................................................................................................
+
+DELIMITER //
+CREATE PROCEDURE updatepassword(IN username CHAR(5), IN password VARCHAR(30))
+BEGIN
+    DECLARE i INT;
+    
+    UPDATE staff_account
+    SET staff_password = password
+    WHERE Staff_user_name = username;
+    
+   
+    SET i = ROW_COUNT();
+    
+    IF i = 0 THEN
+        SELECT "User not found";
+    ELSE
+        SELECT "Password updated";
+    END IF;
+END //
+DELIMITER ;
+
+CALL updatepassword("LEC92", "lecture23");
+.........................................................................................................................................................................................................................................................................................................................................................
+
+////////////////////////////////////ACCOUNT CREATE AND PRIVILLAGES///////////////////////////////////////////
+.........................................................................................................
+DELIMITER //
+CREATE PROCEDURE Create_users_account(IN usertype VARCHAR(30), IN username CHAR(5), IN password VARCHAR(30))
+BEGIN
+    DECLARE i INT;
+    DECLARE create_user_sql VARCHAR(255);
+    DECLARE selectusername VARCHAR(255);
+    DECLARE grant_select_sql VARCHAR(255);
+    DECLARE revoke_select_sql VARCHAR(255);
+	
+
+    SET create_user_sql = CONCAT('CREATE USER ', username, '@''localhost'' IDENTIFIED BY ''', password, ''';');
+
+    
+    SET @create_user_sql = create_user_sql;
+    PREPARE create_user_stmt FROM @create_user_sql;
+    EXECUTE create_user_stmt;
+    DEALLOCATE PREPARE create_user_stmt;
+
+
+    SET grant_select_sql = CONCAT('GRANT ALL PRIVILEGES ON final.* TO ', username, '@''localhost'';');
+    SET revoke_select_sql = CONCAT('REVOKE GRANT OPTION ON final.* FROM ', username, '@''localhost'';');
+
+
+    SET @privilleges=grant_select_sql;
+    PREPARE grant_select FROM @privilleges;
+    EXECUTE grant_select;
+    DEALLOCATE PREPARE grant_select;
+
+
+    SET @privilleges=revoke_select_sql;
+    PREPARE revoke_select FROM @privilleges;
+    EXECUTE revoke_select;
+    DEALLOCATE PREPARE revoke_select;
+
+    SELECT staff_no INTO selectusername FROM staff WHERE staff_no = username;
+
+    INSERT INTO staff_account (Staff_account_type, Staff_user_name, Staff_password) VALUES (usertype, username, password);
+
+  
+    SET i = ROW_COUNT();
+
+  
+    IF i = 0 THEN
+        SELECT "User not found";
+    ELSE
+        SELECT "Successful insert account";
+    END IF;
+END //
+DELIMITER ;
+
+
+call create_users_account("Lecture","LEC07","password1");
+
+..............................................................................................................................................................................................................................................................................................................................................................
+
+//////////////////////////////////////////////////////////INSERT STAFF/////////////////////////////////
+..........................................................................................................
+
+
+DELIMITER //
+
+CREATE PROCEDURE staff_insert(IN staff_no char(5),IN name varchar(50), IN position varchar(20),IN gender varchar(6),IN home_address varchar(20), IN street_address varchar(20), IN country varchar(25))
+BEGIN
+
+INSERT INTO staff VALUES(staff_no,name,position,gender,home_address,street_address,country);
+       
+END//
+
+DELIMITER ;
+
+............................................................................................................................................................................................................................................................................................................................................................................................................................................................................
+
+
+
+...............................................................................................................................................................................................................................................................................................................................................................................................................
+
+
+...............................................................................................................................................................................................................................................................................................................................................................................................................
+
+
+DELIMITER //
+
+CREATE PROCEDURE lecture_in_bst(IN lecid char(5))
+BEGIN
+    DECLARE lec_exists INT;
+    
+    SELECT COUNT(*) INTO lec_exists FROM staffdepartment WHERE staff_no LIKE "LEC__" AND staff_no=lecid AND Department_name="BST";
+
+    IF lec_exists = 0 THEN
+        SELECT "Lecture not found";
+    ELSE
+        SELECT "Successful Found details";
+        SELECT * FROM staffdepartment WHERE staff_no = lecid;
+    END IF;
+
+END//
+
+DELIMITER ;
+....................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................
+
+DELIMITER //
+
+CREATE PROCEDURE lecture_in_ET(IN lecid char(5))
+BEGIN
+    DECLARE lec_exists INT;
+    
+    SELECT COUNT(*) INTO lec_exists FROM staffdepartment WHERE staff_no LIKE "LEC__" AND staff_no=lecid AND Department_name="ET";
+
+    IF lec_exists = 0 THEN
+        SELECT "Lecture not found";
+    ELSE
+        SELECT "Successful Found details";
+        SELECT * FROM staffdepartment WHERE staff_no = lecid;
+    END IF;
+
+END//
+
+DELIMITER ;
+....................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................
+....................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................
+
+
+............................................................................................................................................................................................................................................
+
+
+DELIMITER //
+
+CREATE PROCEDURE lecture_in_ICT(IN lecid char(5))
+BEGIN
+    DECLARE lec_exists INT;
+    
+    SELECT COUNT(*) INTO lec_exists FROM staffdepartment WHERE staff_no LIKE "LEC__" AND staff_no=lecid AND Department_name="ict";
+
+    IF lec_exists = 0 THEN
+        SELECT "Lecture not found";
+    ELSE
+        SELECT "Successful Found details";
+        SELECT * FROM staffdepartment WHERE staff_no = lecid;
+    END IF;
+
+END//
+
+DELIMITER ;
+........................................................................................................................................................................................................................................................................................................................................................................................................................................................................................
+
+
+
+
+..............................................................................................................
+//////////////////////////////////////////////////USER_DEPARTMENT////////////////////////////////////////
+......................................................................................................
+
+DELIMITER //
+
+CREATE PROCEDURE department(IN department varchar(10))
+BEGIN
+    DECLARE lec_exists INT;
+    
+    SELECT COUNT(*) INTO lec_exists FROM staffdepartment WHERE Department_name=department;
+
+    IF lec_exists = 0 THEN
+        SELECT "Department not found";
+    ELSE
+        SELECT "Successful Found details";
+        SELECT * FROM staffdepartment WHERE department_name = department;
+    END IF;
+
+END//
+
+DELIMITER ;
+....................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................
+
+DELIMITER //
+
+CREATE PROCEDURE lectureContact(IN lecid char(5))
+BEGIN
+    DECLARE lec_exists INT;
+    
+    SELECT COUNT(*) INTO lec_exists FROM lecturecountact WHERE  staff_no = lecid;
+
+    IF lec_exists = 0 THEN
+        SELECT "Lecture not found";
+    ELSE
+        SELECT "Successful account details";
+        SELECT * FROM lecturecountact WHERE staff_no= lecid;
+    END IF;
+
+END//
+
+DELIMITER ;
+........................................................................................................................................................................................................................................................................................................................................................................................................................................................................................
+
+
+
+////////////////////////////////////ACCOUNT CREATE AND PRIVILLAGES Technical Officer///////////////////////////////////////////
+.........................................................................................................
+DELIMITER //
+CREATE PROCEDURE Create_users_tec_account(IN usertype VARCHAR(30), IN username CHAR(5), IN password VARCHAR(30))
+BEGIN
+    DECLARE i INT;
+    DECLARE create_user_sql VARCHAR(255);
+    DECLARE selectusername VARCHAR(255);
+    DECLARE grant_select_sql VARCHAR(255);
+    DECLARE revoke_select_sql VARCHAR(255);
+	
+
+    SET create_user_sql = CONCAT('CREATE USER ', username, '@''localhost'' IDENTIFIED BY ''', password, ''';');
+
+    
+    SET @create_user_sql = create_user_sql;
+    PREPARE create_user_stmt FROM @create_user_sql;
+    EXECUTE create_user_stmt;
+    DEALLOCATE PREPARE create_user_stmt;
+
+
+    SET grant_select_sql = CONCAT('GRANT SELECT,CREATE,UPDATE ON lms.* TO ', username, '@''localhost'';');
+    SET revoke_select_sql = CONCAT('REVOKE GRANT OPTION ON lms.* FROM ', username, '@''localhost'';');
+
+
+    SET @privilleges=grant_select_sql;
+    PREPARE grant_select FROM @privilleges;
+    EXECUTE grant_select;
+    DEALLOCATE PREPARE grant_select;
+
+
+    SET @privilleges=revoke_select_sql;
+    PREPARE revoke_select FROM @privilleges;
+    EXECUTE revoke_select;
+    DEALLOCATE PREPARE revoke_select;
+
+    SELECT staff_no INTO selectusername FROM staff WHERE staff_no = username;
+
+    INSERT INTO staff_account (Staff_account_type, Staff_user_name, Staff_password) VALUES (usertype, username, password);
+
+  
+    SET i = ROW_COUNT();
+
+  
+    IF i = 0 THEN
+        SELECT "User not found";
+    ELSE
+        SELECT "Successful insert account";
+    END IF;
+END //
+DELIMITER ;
+
+
+call Create_users_tec_account("Technicalofficer","TEO02","password1");
+
+
+
+
+
+
+//////////////////////////////////////////DEAN ACCOUTNT/////////////////////////////////////////////////////////////////////////
+
+
+
+CREATE USER "DEA01"@"localhost" IDENTIFIED BY "dean123";
+GRANT ALL PRIVILEGES ON lms.* TO "DEA01"@"localhost";
+REVOKE GRANT OPTION ON lms.* FROM "DEA01"@"localhost";
+
+
+////////////////////////////////////ACCOUNT CREATE AND PRIVILLAGES///////////////////////////////////////////
+.........................................................................................................
+DELIMITER //
+CREATE PROCEDURE Create_users_lec_account(IN usertype VARCHAR(30), IN username CHAR(5), IN password VARCHAR(30))
+BEGIN
+    DECLARE i INT;
+    DECLARE create_user_sql VARCHAR(255);
+    DECLARE selectusername VARCHAR(255);
+    DECLARE grant_select_sql VARCHAR(255);
+    DECLARE revoke_select_sql VARCHAR(255);
+	
+
+    SET create_user_sql = CONCAT('CREATE USER ', username, '@''localhost'' IDENTIFIED BY ''', password, ''';');
+
+    
+    SET @create_user_sql = create_user_sql;
+    PREPARE create_user_stmt FROM @create_user_sql;
+    EXECUTE create_user_stmt;
+    DEALLOCATE PREPARE create_user_stmt;
+
+
+    SET grant_select_sql = CONCAT('GRANT ALL PRIVILEGES ON lms.* TO ', username, '@''localhost'';');
+    SET revoke_select_sql = CONCAT('REVOKE GRANT OPTION ON lms.* FROM ', username, '@''localhost'';');
+
+
+    SET @privilleges=grant_select_sql;
+    PREPARE grant_select FROM @privilleges;
+    EXECUTE grant_select;
+    DEALLOCATE PREPARE grant_select;
+
+
+    SET @privilleges=revoke_select_sql;
+    PREPARE revoke_select FROM @privilleges;
+    EXECUTE revoke_select;
+    DEALLOCATE PREPARE revoke_select;
+
+    SELECT staff_no INTO selectusername FROM staff WHERE staff_no = username;
+
+    INSERT INTO staff_account (Staff_account_type, Staff_user_name, Staff_password) VALUES (usertype, username, password);
+
+  
+    SET i = ROW_COUNT();
+
+  
+    IF i = 0 THEN
+        SELECT "User not found";
+    ELSE
+        SELECT "Successful insert account";
+    END IF;
+END //
+DELIMITER ;
+
+
+call Create_users_lec_account("Lecture","LEC07","password1");
+
+
+
+
+//////////////////////////////////////////ADMIN ACCOUTNT/////////////////////////////////////////////////////////////////////////
+
+
+
+CREATE USER "ADM01"@"localhost" IDENTIFIED BY "admin123";
+GRANT ALL PRIVILEGES ON lms.* TO "ADM01"@"localhost" WITH GRANT OPTION;
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
