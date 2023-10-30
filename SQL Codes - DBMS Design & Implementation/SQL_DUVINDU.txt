@@ -1,3 +1,4 @@
+///SQL
 CREATE TABLE ASSEMENT
 ( Submisson_id CHAR(5) NOT NULL,
   Assement_type VARCHAR(30) ,
@@ -73,7 +74,7 @@ VALUES
 ('TG0900', 'external', 'password28'),
 ('TG0998', 'internal', 'password29'),
 ('TG1010', 'external', 'password30'),
-('TG1017', 'internal', 'password31'),
+('TG1027', 'internal', 'password31'),
 ('TG1036', 'external', 'password32'),
 ('TG1067', 'internal', 'password33'),
 ('TG1100', 'external', 'password34'),
@@ -83,19 +84,58 @@ VALUES
 
 INSERT INTO ATTENDANCE (Attendance_id, Medical_status, Attendance_status, Date, Course_code, STUDENT_Reg_no)
 VALUES
-('A0001', 1, 0, '2023-10-25', 'ICT4243', 'TG0200'),
-('A0002', 0, 0, '2023-10-25', 'ICT4123', 'TG0200'),
-('A0003', 0, 1, '2023-10-25', 'ICT4123', 'TG0203'),
-('A0004', 0, 1, '2023-10-25', 'ICT4123', 'TG0207'),
-('A0005', 1, 0, '2023-10-25', 'ICT4243', 'TG0240'),
-('A0006', 1, 0, '2023-10-30', 'ICT4123', 'TG0200');
+  ('A0001', 1, 0, '2023-10-24', 'ICT4243', 'TG0200'),
+  ('A0002', 0, 0, '2023-10-24', 'ICT4123', 'TG0200'),
+  ('A0003', 0, 1, '2023-10-24', 'ICT4123', 'TG0203'),
+  ('A0004', 0, 1, '2023-10-24', 'ICT4123', 'TG0207'),
+  ('A0005', 1, 0, '2023-10-24', 'ICT4243', 'TG0240'),
+  ('A0006', 1, 0, '2023-10-25', 'ICT4123', 'TG0200'),
+  ('A0009', 0, 1, '2023-10-29', 'ICT4123', 'TG0200'),
+  ('A0010', 0, 1, '2023-10-29', 'ICT4243', 'TG0200'),
+  ('A0011', 0, 1, '2023-10-29', 'ICT4123', 'TG0203'),
+  ('A0012', 1, 0, '2023-10-29', 'ICT4123', 'TG0207'),
+  ('A0013', 0, 1, '2023-10-29', 'ICT4243', 'TG0240'),
+  ('A0014', 0, 1, '2023-10-29', 'ICT4243', 'TG0251'),
+  ('A0015', 0, 1, '2023-10-29', 'BST4113', 'TG0267'),
+  ('A0016', 0, 1, '2023-10-29', 'ET4114', 'TG0280'),
+  ('A0017', 0, 1, '2023-10-29', 'ICT4123', 'TG0291'),
+  ('A0018', 0, 1, '2023-10-29', 'BST4113', 'TG0300'),
+  ('A0019', 1, 0, '2023-10-29', 'BST4113', 'TG0305'),
+  ('A0020', 0, 0, '2023-10-29', 'ICT4243', 'TG0320'),
+  ('A0021', 0, 1, '2023-10-29', 'ET4242', 'TG0340'),
+  ('A0022', 0, 1, '2023-10-29', 'ET4114', 'TG0355'),
+  ('A0023', 0, 0, '2023-10-29', 'ICT3112', 'TG0400'),
+  ('A0024', 0, 1, '2023-10-29', 'BST3222', 'TG0420'),
+  ('A0025', 0, 1, '2023-10-29', 'ICT3234', 'TG0450'),
+  ('A0026', 0, 1, '2023-10-29', 'ICT3112', 'TG0478'),
+  ('A0027', 0, 0, '2023-10-29', 'ICT3234', 'TG0478'),
+  ('A0028', 0, 1, '2023-10-29', 'BST3133', 'TG0502'),
+  ('A0029', 0, 1, '2023-10-29', 'ET3112', 'TG0503'),
+  ('A0030', 0, 1, '2023-10-29', 'ICT2112', 'TG0601'),
+  ('A0031', 0, 1, '2023-10-29', 'ICT2223', 'TG0650'),
+  ('A0032', 0, 1, '2023-10-29', 'ET2243', 'TG0678'),
+  ('A0033', 0, 0, '2023-10-29', 'ICT2223', 'TG0701'),
+  ('A0034', 0, 1, '2023-10-29', 'BST2113', 'TG0756'),
+  ('A0035', 0, 1, '2023-10-29', 'ET2243', 'TG0789'),
+  ('A0036', 0, 1, '2023-10-29', 'BST2213', 'TG0800'),
+  ('A0037', 0, 1, '2023-10-29', 'BST2113', 'TG0811'),
+  ('A0038', 0, 1, '2023-10-29', 'ET2122', 'TG0900'),
+  ('A0039', 0, 0, '2023-10-29', 'ET2122', 'TG0998'),
+  ('A0040', 0, 1, '2023-10-29', 'ET4242', 'TG0998'),
+  ('A0041', 0, 1, '2023-10-29', 'BST1222', 'TG1010'),
+  ('A0042', 0, 1, '2023-10-29', 'BST1113', 'TG1027'),
+  ('A0043', 0, 1, '2023-10-29', 'ET1112', 'TG1036'),
+  ('A0044', 0, 1, '2023-10-29', 'BST1222', 'TG1067'),
+  ('A0045', 0, 1, '2023-10-29', 'ICT1242', 'TG1100'),
+  ('A0046', 0, 0, '2023-10-29', 'ICT1242', 'TG1145'),
+  ('A0047', 0, 1, '2023-10-29', 'BST1222', 'TG1198');
 
 
 INSERT INTO REPEAT_STUDENT VALUES
 ('TG0280', 'ET4114', 1),
 ('TG0400', 'ICT3112',1),
 ('TG0811', 'BST2113', 1),
-('TG0340', 'ET4242', 1); 
+('TG0340', 'ET4242', 1);
 
 INSERT INTO RESULT VALUES
 ('TG0200', 'ICT4243', 85),
@@ -131,13 +171,13 @@ INSERT INTO RESULT VALUES
 
 INSERT INTO ASSEMENT (Submisson_id,Assement_type,Score,Due_date,Submission_date, Attendance_id_FK,Course_code,STUDENT_Reg_no)
 VALUES
-('S0001', 'Homework', 95, '2023-11-05', '2023-11-04', 'A0001', 'ICT4223', 'TG0200'),
-('S0002', 'MID_exam', 96, '2023-11-10', '2023-11-04', 'A0001', 'ICT4223', 'TG0200'),
-('S0003', 'MID_exam', 88, '2023-11-10', '2023-11-03', 'A0002', 'ICT4123', 'TG0203'),
-('S0004', 'Homework', 92, '2023-11-12', '2023-11-04', 'A0003', 'ICT4123', 'TG0207');
+('S0001', 'Homework', 95, '2023-11-05', '2023-11-04', 'A0001', 'ICT4243', 'TG0200'),
+('S0002', 'MID_exam', 96, '2023-11-10', '2023-11-04', 'A0002', 'ICT4123', 'TG0200'),
+('S0003', 'MID_exam', 88, '2023-11-10', '2023-11-03', 'A0003', 'ICT4123', 'TG0203'),
+('S0004', 'Homework', 92, '2023-11-12', '2023-11-04', 'A0004', 'ICT4123', 'TG0207');
 
 
-
+//foreignkey
 ALTER TABLE STUDENT_ACCOUNT
 ADD FOREIGN KEY (STUDENT_USERNAME)
 REFERENCES STUDENT(Reg_no);
@@ -166,9 +206,6 @@ ALTER TABLE REPEAT_STUDENT
 ADD FOREIGN KEY (RESULT_STUDENT_Reg_no)
 REFERENCES RESULT (STUDENT_Reg_no);
 
-ALTER TABLE REPEAT_STUDENT
-ADD FOREIGN KEY (RESULT_Course_code)
-REFERENCES RESULT (Course_code);
 
 ALTER TABLE RESULT
 ADD FOREIGN KEY (STUDENT_Reg_no)
@@ -178,4 +215,7 @@ ALTER TABLE RESULT
 ADD FOREIGN KEY (Course_code)
 REFERENCES COURSE (course_code);
 
+ALTER TABLE REPEAT_STUDENT
+ADD FOREIGN KEY (RESULT_Course_code)
+REFERENCES RESULT (Course_code);
 

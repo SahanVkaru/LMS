@@ -1,18 +1,3 @@
- SET FOREIGN_KEY_CHECKS=0; 
-
-CREATE TABLE Staff_department(
-    Staff_no char(5),
-     Department_name Varchar(10),
-     PRIMARY KEY (Staff_no,Department_name),
-     FOREIGN KEY(Staff_no) REFERENCES Staff(Staff_no));
-
- CREATE TABLE Staff_telephone(
-     Staff_no char(5),
-     Telephone char(11),
-     PRIMARY KEY(Telephone,Staff_no),
-     FOREIGN KEY(Staff_no) REFERENCES Staff(Staff_no));
-
-
 CREATE TABLE Staff(
      Staff_no CHAR(5),
      Name VARCHAR(25),
@@ -23,40 +8,18 @@ CREATE TABLE Staff(
      Country VARCHAR(25),
      PRIMARY KEY(Staff_no));
 
+CREATE TABLE Staff_department(
+    Staff_no char(5),
+     Department_name Varchar(10),
+     PRIMARY KEY (Staff_no,Department_name),
+     FOREIGN KEY(Staff_no) REFERENCES Staff(Staff_no),
+     FOREIGN KEY(Department_name) REFERENCES department(Name));
 
-
-
-
-
-INSERT INTO Staff VALUES
-("ADM01", 'Sahan Viduranaga', 'Administrator', 'MALE', 'No 57', 'Kalawana', 'Sri Lanka'),
-("DEA01", 'Nimala Fernando', 'Dean', 'MALE', '123 Main Street', 'Cityville', 'Sri Lanka'),
-("TEO01", 'Jane Smith', 'Technical Officer', 'FEMALE', '456 Elm Avenue', 'Townsville', 'Amarica'),
-("LEC01", 'Michael Johnson', 'Lecturer', 'MALE', '789 Oak Drive', 'Villagetown', 'United Kindom '),
-("LEC02", 'Alice Williams', 'Lecturer', 'FEMALE', '987 Pine Lane', 'Countryside', 'United State');
-
-
-INSERT INTO Staff VALUES
-("TEO02", 'Kamal Perera', 'Technical Officer', 'MALE', '42 Lake Road', 'Harbor City', 'Sri Lanka'),
-("TEO03", 'Ranjan Rajapakse', 'Technical Officer', 'MALE', '88 Red Avenue', 'Hometown', 'Sri Lanka'),
-("LEC03", 'Dilani Silva', 'Lecturer', 'FEMALE', '101 Maple Drive', 'Valleyville', 'Sri Lanka'),
-("LEC04", 'Samadhi Jayasinghe', 'Lecturer', 'FEMALE', '123 Oak Lane', 'Mountainside', 'Sri Lanka');
-
-
-
-INSERT INTO staff_telephone VALUES
-  ("ADM01", '07123456789'),
-  ("TEO01", '08112345678'),
-  ("DEA01", '07198765432'),
-  ("LEC01", '01154321987'),
-  ("ADM01", '07534567890');
-
-
-
-INSERT INTO Staff_department (Staff_no, Department_name)
-VALUES("LEC02", 'ET'),
-  ("TEO02", 'BST'),
-  ("TEO01","ET");
+ CREATE TABLE Staff_telephone(
+     Staff_no char(5),
+     Telephone char(11),
+     PRIMARY KEY(Telephone,Staff_no),
+     FOREIGN KEY(Staff_no) REFERENCES Staff(Staff_no));
 
 
 
@@ -69,25 +32,89 @@ PRIMARY KEY(Staff_user_name),
 FOREIGN KEY(Staff_user_name) REFERENCES staff(Staff_no));
 
 
+
+
+
+INSERT INTO Staff VALUES
+("ADM01", 'Sahan Viduranaga', 'Administrator', 'MALE', 'No 57 Pothupitiya', 'Kalawana', 'Sri Lanka'),
+("DEA01", 'Nimala Fernando', 'Dean', 'MALE', '123 Main Street', 'Cityville', 'Sri Lanka'),
+("TEO01", 'Jane Smith', 'Technical Officer', 'FEMALE', '456 Elm Avenue', 'Townsville', 'Amarica'),
+("LEC01", 'Michael Johnson', 'Lecturer', 'MALE', '789 Oak Drive', 'Villagetown', 'United Kindom '),
+("LEC02", 'Alice Williams', 'Lecturer', 'FEMALE', '987 Pine Lane', 'Countryside', 'United State');
+
+INSERT INTO staff
+VALUES
+('LEC05', 'Saman Kumara', 'Lecturer', 'MALE', '456 Main Street', 'Kelaniya', 'Sri lanka'),
+('LEC06', 'Vijayabahu', 'Lecturer', 'FEMALE', '789 Main Street', 'Colombo', 'Sri lanka'),
+('LEC07', 'Duvidu Sathsara', 'Lecturer', 'MALE', '101 Pine Road', 'Valleyview', 'Srilanka'),
+('LEC08', 'Mary Brown', 'Lecturer', 'FEMALE', '222 Birch Lane', 'Meadowside', 'UK'),
+('LEC09', 'Michael Wilson', 'Lecturer', 'MALE', '333 Cedar Drive', 'Brookside', 'New Zealand'),
+('LEC10', 'Emily Davis', 'Lecturer', 'FEMALE', '444 Fir Street', 'Parkside', 'Germany');
+
+
+
+INSERT INTO Staff VALUES
+("TEO02", 'Kamal Perera', 'Technical Officer', 'MALE', '42 Lake Road', 'Harbor City', 'Sri Lanka'),
+("TEO03", 'Ranjan Rajapakse', 'Technical Officer', 'MALE', '88 Red Avenue', 'Hometown', 'Sri Lanka'),
+("LEC03", 'Dilani Silva', 'Lecturer', 'FEMALE', '101 Maple Drive', 'Valleyville', 'Sri Lanka'),
+("LEC04", 'Samadhi Jayasinghe', 'Lecturer', 'FEMALE', '123 Oak Lane', 'Mountainside', 'Sri Lanka'),
+("TEO04", 'Sathushi Rajapaka', 'Technical Officer', 'FEMALE', '14 Main Avenue', 'Ganpaha town', 'Sri Lanka'),
+("TEO05", 'Bagya Danajaya', 'Technical Officer', 'FEMALE', '47 Sorowa', 'Kalawana', 'Sri Lanka');
+
 INSERT INTO Staff_account (Staff_account_type, Staff_user_name, Staff_password)
 VALUES
-  ('Administrator Account', 'ADM01', 'adminpass123'),
-  ('Lecturer Account', 'LEC01', 'lecturerpass456'),
-  ('Teaching Assistant Account', 'TEO01', 'tauser789'),
-  ('Dean Account', 'DEA01', 'deanpass432'),
-  ('Lecturer Account', 'LEC02', 'lecturer2pass987');
+
+  ('Administrator', 'ADM01', 'adminpass123'),
+  ('Lecturer', 'LEC01', 'lecturerpass456'),
+  ('Technical Officer', 'TEO01', 'tauser789'),
+  ('Dean', 'DEA01', 'deanpass432'),
+  ('Lecturer', 'LEC02', 'lecturer2pass987');
 
 
-
-INSERT INTO Staff_account (Staff_account_type, Staff_user_name, Staff_password)
+INSERT INTO Staff_department (Staff_no,Department_name)
 VALUES
-  ('Lecturer Account', 'LEC05', 'lecturer5pass123'),
-  ('Lecturer Account', 'LEC06', 'lecturer6pass456'),
-  ('Lecturer Account', 'LEC07', 'lecturer7pass789'),
-  ('Lecturer Account', 'LEC08', 'lecturer8pass321'),
-  ('Lecturer Account', 'LEC09', 'lecturer9pass654'),
-  ('Lecturer Account', 'LEC10', 'lecturer10pass987');
+("LEC01","ICT"),
+("LEC02",'ET'),
+("LEC03",'MDS'),
+("LEC04","ET"),
+("LEC04","ICT"),
+("LEC05","ET"),
+("LEC06","ICT"),
+("LEC06","BST"),
+("LEC07","ICT"),
+("LEC08","BST"),
+("LEC08","ICT"),
+("LEC09","BST"),
+("LEC10","ICT"),
+("TEO01","ET"),
+("TEO01","ICT"),
+("TEO02",'BST'),
+("TEO04","ICT"),
+("TEO05","BST"),
+("TEO05","ET"),
+("TEO03","MDS");
 
 
 
- SET FOREIGN_KEY_CHECKS=1;
+INSERT INTO staff_telephone VALUES
+  ("ADM01", '07123456789'),
+  ("TEO01", '08112345678'),
+  ("DEA01", '07198765432'),
+  ("LEC01", '01154321987'),
+  ("ADM01", '07534567890'),
+  ("LEC01", '01154532187'),
+  ("LEC10", '07523745784'),
+  ("LEC10", '98124657588'),
+  ("LEC02", '07143645467'),
+  ("LEC02", '07143655467'),
+  ("LEC02", '07143454357'),
+  ("LEC02", '07938464547'),
+  ("TEO04", '04511245678'),
+  ("TEO05", '07118345678'),
+  ("DEA01", '07198465432');
+
+
+
+
+
+

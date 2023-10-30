@@ -5,11 +5,19 @@
 CREATE VIEW  Result_Details AS 
 SELECT R.STUDENT_Reg_no , S.First_name , C.Course_code, R.Marks,
 CASE
-    WHEN marks >= 90 THEN 'A'
-    WHEN marks >= 80 THEN 'B'
-    WHEN marks >= 70 THEN 'C'
-    WHEN marks >= 60 THEN 'D'
-    ELSE 'F'
+    WHEN marks >= 80 THEN 'A+'
+    WHEN marks >= 75 THEN 'A'
+    WHEN marks >= 70 THEN 'A-'
+    WHEN marks >= 65 THEN 'B+'
+    WHEN marks >= 60 THEN 'B-'
+    WHEN marks >= 55 THEN 'B'
+    WHEN marks >= 50 THEN 'C+'
+    WHEN marks >= 45 THEN 'C'
+    WHEN marks >= 40 THEN 'C-'
+    WHEN marks >= 30 THEN 'D'
+
+
+    ELSE 'E'
 END AS grade,
 CASE
     WHEN RS.RESULT_STUDENT_Reg_no = R.STUDENT_Reg_no THEN 'repeat'
@@ -73,17 +81,6 @@ SELECT
 FROM attendance a
 
 GROUP BY  STUDENT_Reg_no,Course_code;
-
-
-
-
-
-
-
-
-
-
-
 
 
 // PROCEDURES
@@ -177,4 +174,3 @@ BEGIN
     VALUES (Attendance_id, Medical_status, Attendance_status, Date, Course_code, STUDENT_Reg_no);
 END$$
 DELIMITER ;
-
